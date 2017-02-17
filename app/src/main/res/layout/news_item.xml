@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<LinearLayout
+    android:id="@+id/layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:layout_marginEnd="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp">
+
+    <!-- The article's image-->
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="130sp"
+        android:layout_height="106sp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="post Image" />
+</LinearLayout>
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_toLeftOf="@+id/layout"
+    android:layout_toStartOf="@+id/layout"
+    android:orientation="vertical">
+
+    <!-- Title-->
+    <TextView
+        android:id="@+id/title_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16sp"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:ellipsize="end"
+
+        android:maxLines="2"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:text="News Title"/>
+
+    <TextView
+        android:id="@+id/description_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16sp"
+        android:layout_marginStart="16sp"
+        android:maxLines="5"
+        android:layout_below="@+id/title_view"
+        android:text="description"
+        />
+
+    <!-- Date-->
+    <TextView
+        android:id="@+id/date_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/description_view"
+        android:layout_marginBottom="16sp"
+        android:layout_marginLeft="16sp"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="21sp"
+        android:maxLength="22"
+        android:textSize="12sp"
+        android:text="wednesday, 15"/>
+
+    <TextView
+        android:id="@+id/image_url"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_view"
+        android:text="image_url"
+        android:visibility="gone"/>
+
+</RelativeLayout>
+</RelativeLayout>
