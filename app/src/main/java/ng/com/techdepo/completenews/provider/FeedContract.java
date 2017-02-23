@@ -49,6 +49,8 @@ public class FeedContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_ENTRIES).build();
 
+      //  public static final String DEFAULT_SORT = COLUMN_NAME_PUBLISHED + " DESC";
+
         /**
          * Table name where records are stored for "entry" resources.
          */
@@ -69,5 +71,33 @@ public class FeedContract {
         public static final String COLUMN_NAME_DESCRIPTION = "description";
 
         public static final String COLUMN_NAME_IMAGE_URL = "image_url";
+
+        public static final String COLUMN_NAME_IMAGE_URL_2 = "image_url2";
+
+        public static final String COLUMN_NAME_COMPLETE_DES = "com_description";
+
+
+        public static Uri buildDirUri() {
+            return BASE_CONTENT_URI.buildUpon().appendPath("entries").build();
+        }
+
+        /**
+         * Matches: /items/[_id]/
+         */
+        public static Uri buildItemUri(long _id) {
+            return BASE_CONTENT_URI.buildUpon().appendPath("entries").appendPath(Long.toString(_id)).build();
+        }
+
+        /**
+         * Read item ID item detail URI.
+         */
+        public static long getItemId(Uri itemUri) {
+            return Long.parseLong(itemUri.getPathSegments().get(1));
+        }
+
     }
+
+
+
+
 }

@@ -2,13 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_detail"
+    android:id="@+id/content_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ng.com.techdepo.completenews.DetailsActivity"
+    tools:showIn="@layout/activity_details">
 
-     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ng.com.techdepo.completenews.DetailActivity"
-    tools:showIn="@layout/activity_detail">
 
     <WebView
         android:id="@+id/detail_web_view"
@@ -16,7 +20,5 @@
         android:layout_height="match_parent"
         android:background="@color/colorPrimary"
         />
-
-
 
 </RelativeLayout>

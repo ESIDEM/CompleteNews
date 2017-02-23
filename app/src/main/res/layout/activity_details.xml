@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="ng.com.techdepo.completenews.DetailActivity">
+    tools:context="ng.com.techdepo.completenews.DetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_detail" />
+    <include layout="@layout/content_details" />
 
 
 

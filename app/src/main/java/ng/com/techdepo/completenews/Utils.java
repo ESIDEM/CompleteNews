@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 
 /**
- * Created by ESIDEM jnr on 2/16/2017.
+ * Created by ESIDEM jnr on 2/21/2017.
  */
 
 public class Utils {
@@ -44,5 +44,4 @@ public class Utils {
 
         return (value - min) / (float) (max - min);
     }
-
 }

@@ -6,82 +6,76 @@ package ng.com.techdepo.completenews.net;
 
 public class RSSItem {
 
-    // All <item> node name
-    String _title;
-    String _link;
-    String _description;
-    String _pubdate;
-    String _guid;
+    String title;
+    String description;
+    String pubDate;
+    String com_description;
+    String imageUrl2;
+    String guid;
+    String link;
+    String imageUrl;
 
-    String _image;
-
-    // constructor
-    public RSSItem(){
-
+    public String getTitle() {
+        return title;
     }
 
-    // constructor with parameters
-    public RSSItem(String title, String link, String description, String pubdate, String guid,String image){
-        this._title = title;
-        this._link = link;
-        this._description = description;
-        this._pubdate = pubdate;
-        this._guid = guid;
-        this._image = image;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    /**
-     * All SET methods
-     * */
-    public void setTitle(String title){
-        this._title = title;
+    public String getDescription() {
+        return description;
     }
 
-    public void setLink(String link){
-        this._link = link;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setDescription(String description){
-        this._description = description;
+    public String getPubDate() {
+        return pubDate;
     }
 
-    public void setPubdate(String pubDate){
-        this._pubdate = pubDate;
+    public void setPubDate(String pubDate) {
+        this.pubDate = pubDate;
     }
 
-
-    public void setGuid(String guid){
-        this._guid = guid;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    /**
-     * All GET methods
-     * */
-    public String getTitle(){
-        return this._title;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getLink(){
-        return this._link;
+    public String getLink() {
+        return link;
     }
 
-    public String getDescription(){
-        return this._description;
+    public void setLink(String link) {
+        this.link = link;
+    }
+    public String getGuid() {
+        return guid;
     }
 
-    public String getPubdate(){
-        return this._pubdate;
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
-    public String getGuid(){
-        return this._guid;
+    public String getImageUrl2() {
+        return imageUrl2;
     }
 
-    public String get_image() {
-        return _image;
+    public void setImageUrl2(String imageUrl2) {
+        this.imageUrl2 = imageUrl2;
     }
 
-    public void set_image(String _image) {
-        this._image = _image;
+    public String getCom_description() {
+        return com_description;
     }
+
+    public void setCom_description(String com_description) {
+        this.com_description = com_description;
+    }
+
 }

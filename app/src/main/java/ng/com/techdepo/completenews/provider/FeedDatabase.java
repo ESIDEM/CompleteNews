@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class FeedDatabase extends SQLiteOpenHelper {
 
     /** Schema version. */
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     /** Filename for SQLite file. */
     public static final String DATABASE_NAME = "feed.db";
 
@@ -27,6 +27,8 @@ public class FeedDatabase extends SQLiteOpenHelper {
                     FeedContract.Entry.COLUMN_NAME_GUID + TYPE_TEXT + COMMA_SEP +
                     FeedContract.Entry.COLUMN_NAME_PUBLISHED + TYPE_INTEGER +COMMA_SEP +
                     FeedContract.Entry.COLUMN_NAME_DESCRIPTION + TYPE_TEXT + COMMA_SEP +
+                    FeedContract.Entry.COLUMN_NAME_COMPLETE_DES + TYPE_TEXT + COMMA_SEP +
+                    FeedContract.Entry.COLUMN_NAME_IMAGE_URL_2 + TYPE_TEXT + COMMA_SEP +
                     FeedContract.Entry.COLUMN_NAME_IMAGE_URL + TYPE_TEXT + ");";
 
 

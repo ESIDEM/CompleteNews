@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 /**
- * Created by ESIDEM jnr on 2/14/2017.
+ * Created by ESIDEM jnr on 2/21/2017.
  */
 
 public class SyncService extends Service {

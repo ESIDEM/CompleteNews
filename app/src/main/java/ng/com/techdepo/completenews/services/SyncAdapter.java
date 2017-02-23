@@ -2,16 +2,12 @@ package ng.com.techdepo.completenews.services;
 
 import android.accounts.Account;
 import android.annotation.TargetApi;
-
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
-
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-
 import android.content.SyncResult;
-
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -22,18 +18,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-
 import ng.com.techdepo.completenews.Utils;
-import ng.com.techdepo.completenews.net.RSSFeed;
 import ng.com.techdepo.completenews.net.RSSItem;
 import ng.com.techdepo.completenews.net.RSSParser;
 import ng.com.techdepo.completenews.provider.FeedContract;
 
 /**
- * Created by ESIDEM jnr on 2/14/2017.
+ * Created by ESIDEM jnr on 2/21/2017.
  */
 
-public class SyncAdapter extends AbstractThreadedSyncAdapter {
+public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
     public static final String TAG = "SyncAdapter";
 
@@ -44,9 +38,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     List<RSSItem> rssItems = new ArrayList<RSSItem>();
 
-    RSSFeed rssFeed;
 
-   String[] mSelectionArgs = new String[] { "title" };
+
+    RSSItem myItem;
+
+
+
+    String[] mSelectionArgs = new String[] { "title" };
 
     private static final String[] PROJECTION = new String[] {
             FeedContract.Entry._ID,
@@ -74,11 +72,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     private static String TAG_GUID = "guid"; // not used
 
 
-    private String rss_link = "http://www.thesundaily.my/rss/latest";
+    private String rss_link = "http://saharareporters.com/feeds/latest/feed";
     /**
      * URL to fetch content from during a sync.
      *
-
      * Network connection timeout, in milliseconds.
      */
     private static final int NET_CONNECT_TIMEOUT_MILLIS = 15000;  // 15 seconds
@@ -129,12 +126,34 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
-        new loadRSSFeedItems().execute(rss_link);
+        new loadRSSFeedItems().execute();
     }
 
 
-    class loadRSSFeedItems extends AsyncTask<String, String, String> {
+    class loadRSSFeedItems extends AsyncTask<Void, String, String> {
 
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            rssItems = rssParser.parse();
+
+            // Build hash table of incoming entries
+            HashMap<String, RSSItem> entryMap = new HashMap<String, RSSItem>();
+
+            mContentResolver.delete(FeedContract.Entry.CONTENT_URI,null,null);
+
+            // looping through each item
+            for(RSSItem item : rssItems){
+                // HashMap<String, RSSItem> entryMap = new HashMap<String, RSSItem>();
+                entryMap.put(item.getGuid(), item);
+
+                insertEntry(item);
+
+
+            }
+            return null;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -148,30 +167,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
 
-        @Override
-        protected String doInBackground(String... args) {
-            // rss link url
-            String rss_url = args[0];
-
-
-            // list of rss items
-            rssItems = rssParser.getRSSFeedItems(rss_url);
-
-            // Build hash table of incoming entries
-            HashMap<String, RSSItem> entryMap = new HashMap<String, RSSItem>();
-
-            // looping through each item
-            for(RSSItem item : rssItems){
-             // HashMap<String, RSSItem> entryMap = new HashMap<String, RSSItem>();
-                entryMap.put(item.getGuid(), item);
-
-               insertEntry(item);
-
-
-            }
-
-            return null;
-        }
+        
 
         /**
          * After completing background task Dismiss the progress dialog
@@ -184,8 +180,8 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private void insertEntry(RSSItem entry) {
 
-        if (newsExist(entry.getLink(), entry.getTitle()))
-            return;
+//        if (newsExist(entry.getLink(), entry.getTitle()))
+//            return;
 
 
         ContentValues values = new ContentValues();
@@ -194,8 +190,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         values.put(FeedContract.Entry.COLUMN_NAME_TITLE, entry.getTitle());
         values.put(FeedContract.Entry.COLUMN_NAME_LINK, entry.getLink());
         values.put(FeedContract.Entry.COLUMN_NAME_DESCRIPTION, entry.getDescription());
-        values.put(FeedContract.Entry.COLUMN_NAME_IMAGE_URL, entry.get_image());
-        values.put(FeedContract.Entry.COLUMN_NAME_PUBLISHED, entry.getPubdate());
+        values.put(FeedContract.Entry.COLUMN_NAME_IMAGE_URL, entry.getImageUrl());
+        values.put(FeedContract.Entry.COLUMN_NAME_PUBLISHED, entry.getPubDate());
+        values.put(FeedContract.Entry.COLUMN_NAME_COMPLETE_DES, entry.getCom_description());
+        values.put(FeedContract.Entry.COLUMN_NAME_IMAGE_URL_2, entry.getImageUrl2());
 
         mContentResolver.insert(FeedContract.Entry.CONTENT_URI, values);
     }

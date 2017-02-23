@@ -1,14 +1,20 @@
 package ng.com.techdepo.completenews.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentProviderOperation;
+import android.content.ContentProviderResult;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.OperationApplicationException;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ESIDEM jnr on 2/14/2017.

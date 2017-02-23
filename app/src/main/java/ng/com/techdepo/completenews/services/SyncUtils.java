@@ -13,7 +13,7 @@ import ng.com.techdepo.completenews.accounts.GenericAccountService;
 import ng.com.techdepo.completenews.provider.FeedContract;
 
 /**
- * Created by ESIDEM jnr on 2/14/2017.
+ * Created by ESIDEM jnr on 2/21/2017.
  */
 
 public class SyncUtils {
