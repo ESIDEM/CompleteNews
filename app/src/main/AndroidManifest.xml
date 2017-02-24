@@ -77,6 +77,7 @@
 
         <activity
             android:name=".DetailsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_details"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -84,6 +85,25 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ng.com.techdepo.completenews.MainActivity" />
         </activity>
+
+        <!-- Detail Widget -->
+        <receiver
+            android:name=".widget.NewsWidgetProvider"
+            android:label="@string/widget_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
+        </receiver>
+        <service
+            android:name=".widget.NewsWidgetServices"
+            android:exported="false"
+            android:enabled="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+
     </application>
 
 </manifest>

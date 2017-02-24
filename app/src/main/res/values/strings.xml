@@ -8,4 +8,7 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="offline_text" translatable="true">Please make sure you are Connected to a network</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="widget_title">Complete News</string>
+
+    <string name="widget_empty_list">Nothing in the list</string>
 </resources>
