@@ -15,4 +15,5 @@
     <string name="cat_bus">Business</string>
     <string name="nav_header_text">Categories</string>
     <string name="widget_empty_list">Nothing in the list</string>
+    <string name="no_network_text_view">No Network to Fetch News</string>
 </resources>

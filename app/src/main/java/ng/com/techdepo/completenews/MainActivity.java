@@ -5,7 +5,6 @@ package ng.com.techdepo.completenews;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
@@ -33,7 +32,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 import ng.com.techdepo.completenews.net.RSSParser;
-import ng.com.techdepo.completenews.provider.FeedContract;
 import ng.com.techdepo.completenews.services.SyncUtils;
 import ng.com.techdepo.completenews.utils.Connection;
 
@@ -49,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Context nContext;
     private RecyclerView mRecyclerView;
     boolean isConnected;
+    private TextView noNetworkText;
 
 
     @Override
@@ -82,12 +81,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         isConnected = Connection.isNetworkAvailable(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        noNetworkText = (TextView) findViewById(R.id.no_network_text_view);
 
         getSupportLoaderManager().initLoader(0, null, this);
 
 
 
-        refreshUI();
+        loadNews();
         nContext = this;
 
 
@@ -138,21 +138,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             // Handle the camera action
 
             RSSParser.link = "http://www.techrepublic.com/mediafed/articles/latest/";
-            SyncUtils.TriggerRefresh();
+            loadNews();
         } else if (id == R.id.nav_sport) {
 
             RSSParser.link = "http://api.foxsports.com/v1/rss?partnerKey=zBaFxRyGKCfxBagJG9b8pqLyndmvo7UU&tag=soccer";
-            SyncUtils.TriggerRefresh();
+            loadNews();
 
         } else if (id == R.id.nav_business) {
 
             RSSParser.link = "http://businessnews.com.ng/feed/";
-            SyncUtils.TriggerRefresh();
+            loadNews();
 
         } else if (id == R.id.nav_local) {
 
             RSSParser.link = "http://thenationonlineng.net/feed/";
-            SyncUtils.TriggerRefresh();
+            loadNews();
 
         
 
@@ -197,13 +197,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onDestroy();
     }
 
-    private void refreshUI() {
+    private void loadNews() {
 
         if (isConnected) {
+            noNetworkText.setVisibility(View.GONE);
             SyncUtils.TriggerRefresh();
         } else {
-            Connection.showToastForDuration(this, getString(R.string.offline_text), 10000,
-                    Gravity.CENTER);
+            noNetworkText.setVisibility(View.VISIBLE);
+            return;
         }
     }
 
@@ -260,19 +261,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 @Override
                 public void onClick(View view) {
 
+                    if(isConnected) {
 
-               Uri uri =    FeedContract.Entry.buildItemUri(getItemId(vh.getAdapterPosition()));
+                        String rowId = mCursor.getString(MyLoader.Query.COLUMN_ID);
 
-               String rowId = mCursor.getString(MyLoader.Query.COLUMN_ID);
-                  //  Toast.makeText(getApplicationContext(),title + " is clicked!", Toast.LENGTH_SHORT).show();
 
-                    Intent feedDetail = new Intent(getApplicationContext(), DetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("rowId", rowId);
-                feedDetail.putExtras(bundle);
-                startActivity(feedDetail);
+                        Intent feedDetail = new Intent(getApplicationContext(), DetailsActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("rowId", rowId);
+                        feedDetail.putExtras(bundle);
+                        startActivity(feedDetail);
+                    }else {
+
+                        Connection.showToastForDuration(getApplicationContext(), getString(R.string.offline_text), 5000,
+                                Gravity.CENTER);
+                    }
                 }
             });
+
 
             return vh;
         }

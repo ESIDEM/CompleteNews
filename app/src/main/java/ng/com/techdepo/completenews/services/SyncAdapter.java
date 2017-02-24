@@ -2,6 +2,7 @@ package ng.com.techdepo.completenews.services;
 
 import android.accounts.Account;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
@@ -31,8 +32,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
     public static final String TAG = "SyncAdapter";
 
-    // Array list for list view
-    ArrayList<HashMap<String, String>> rssItemList = new ArrayList<HashMap<String,String>>();
+
 
     RSSParser rssParser = new RSSParser();
 
@@ -40,11 +40,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
 
 
-    RSSItem myItem;
 
 
 
-    String[] mSelectionArgs = new String[] { "title" };
+
 
     private static final String[] PROJECTION = new String[] {
             FeedContract.Entry._ID,
@@ -65,14 +64,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
     public static final int COLUMN_PUBLISHED = 4;
 
 
-    private static String TAG_TITLE = "title";
-    private static String TAG_LINK = "link";
-    private static String TAG_DESRIPTION = "description";
-    private static String TAG_PUB_DATE = "pubDate";
-    private static String TAG_GUID = "guid"; // not used
 
-
-    private String rss_link = "http://saharareporters.com/feeds/latest/feed";
     /**
      * URL to fetch content from during a sync.
      *
@@ -145,7 +137,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
 
             // looping through each item
             for(RSSItem item : rssItems){
-                // HashMap<String, RSSItem> entryMap = new HashMap<String, RSSItem>();
+
                 entryMap.put(item.getGuid(), item);
 
                 insertEntry(item);
@@ -158,12 +150,6 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            pDialog = new ProgressDialog(
-//                    ListRSSItemsActivity.this);
-//            pDialog.setMessage("Loading recent articles...");
-//            pDialog.setIndeterminate(false);
-//            pDialog.setCancelable(false);
-//            pDialog.show();
         }
 
 
@@ -174,14 +160,13 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
          * **/
         protected void onPostExecute(String args) {
             // dismiss the dialog after getting all products
-            //  pDialog.dismiss();
+//            progressDialog.dismiss();
         }
     }
 
     private void insertEntry(RSSItem entry) {
 
-//        if (newsExist(entry.getLink(), entry.getTitle()))
-//            return;
+
 
 
         ContentValues values = new ContentValues();
@@ -199,38 +184,4 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter{
     }
 
 
-
-
-
-    private boolean newsExist(String link, String title) {
-        Cursor c = mContentResolver.query(
-                FeedContract.Entry.CONTENT_URI,
-                new String[]{FeedContract.Entry.COLUMN_NAME_GUID},
-                FeedContract.Entry.COLUMN_NAME_LINK + " = ?",
-                new String[]{link},
-                null
-        );
-
-
-        boolean exists = c.getCount() > 0;
-        if (exists) {
-            c.moveToFirst();
-            String guid = c.getString(c.getColumnIndex(FeedContract.Entry.COLUMN_NAME_GUID));
-            String[] tits = guid.split("|");
-            List<String> strings = Arrays.asList(tits);
-            if (!strings.contains(title)) {
-                String[] catList = new String[strings.size() + 1];
-                for (int i = 0; i < strings.size(); i++) {
-                    catList[i] = strings.get(i);
-                }
-                catList[strings.size()] = title;
-                String newTitle = Utils.join(catList, "|");
-                ContentValues values = new ContentValues();
-                values.put(FeedContract.Entry.COLUMN_NAME_GUID, newTitle);
-                mContentResolver.update(FeedContract.Entry.CONTENT_URI, values, FeedContract.Entry.COLUMN_NAME_LINK + " = ?", new String[]{link});
-            }
-        }
-        c.close();
-        return exists;
-    }
 }
