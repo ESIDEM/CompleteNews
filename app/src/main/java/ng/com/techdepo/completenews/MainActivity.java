@@ -1,7 +1,7 @@
 package ng.com.techdepo.completenews;
 
 
-import android.content.ContentResolver;
+
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,16 +25,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+
+
+import ng.com.techdepo.completenews.net.RSSParser;
 import ng.com.techdepo.completenews.provider.FeedContract;
 import ng.com.techdepo.completenews.services.SyncUtils;
 import ng.com.techdepo.completenews.utils.Connection;
 
-import static java.security.AccessController.getContext;
+
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>,
@@ -69,15 +72,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             mTwoPane = true;
         }
 
+        RSSParser.link = "http://www.techrepublic.com/mediafed/articles/latest/";
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         SyncUtils.CreateSyncAccount(this);
 
+
         isConnected = Connection.isNetworkAvailable(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         getSupportLoaderManager().initLoader(0, null, this);
+
+
 
         refreshUI();
         nContext = this;
@@ -126,17 +134,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_technology) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
+            RSSParser.link = "http://www.techrepublic.com/mediafed/articles/latest/";
+            SyncUtils.TriggerRefresh();
+        } else if (id == R.id.nav_sport) {
 
-        } else if (id == R.id.nav_manage) {
+            RSSParser.link = "http://api.foxsports.com/v1/rss?partnerKey=zBaFxRyGKCfxBagJG9b8pqLyndmvo7UU&tag=soccer";
+            SyncUtils.TriggerRefresh();
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_business) {
 
-        } else if (id == R.id.nav_send) {
+            RSSParser.link = "http://businessnews.com.ng/feed/";
+            SyncUtils.TriggerRefresh();
+
+        } else if (id == R.id.nav_local) {
+
+            RSSParser.link = "http://thenationonlineng.net/feed/";
+            SyncUtils.TriggerRefresh();
+
+        
 
         }
 

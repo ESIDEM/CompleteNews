@@ -15,14 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 /**
  * Created by ESIDEM jnr on 2/15/2017.
  */
 
 public class RSSParser {
 
-    private static String link = "http://www.techrepublic.com/mediafed/articles/latest/";
-
+   public static String link ;
 
 
     public List<RSSItem> parse() {

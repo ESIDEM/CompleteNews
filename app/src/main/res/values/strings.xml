@@ -4,11 +4,15 @@
     <string name="action_refresh">Refresh</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="loading">Waiting for sync...</string>
+
     <string name="title_activity_detail">DetailActivity</string>
     <string name="offline_text" translatable="true">Please make sure you are Connected to a network</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="widget_title">Complete News</string>
-
+    <string name="cat_tech">Technology</string>
+    <string name="cat_Sport">Sport</string>
+    <string name="cat_local">Local</string>
+    <string name="cat_bus">Business</string>
+    <string name="nav_header_text">Categories</string>
     <string name="widget_empty_list">Nothing in the list</string>
 </resources>
