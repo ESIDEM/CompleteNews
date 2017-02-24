@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -32,6 +33,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 
 import ng.com.techdepo.completenews.net.RSSParser;
+import ng.com.techdepo.completenews.provider.FeedContract;
 import ng.com.techdepo.completenews.services.SyncUtils;
 import ng.com.techdepo.completenews.utils.Connection;
 
@@ -261,14 +263,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 @Override
                 public void onClick(View view) {
 
+
+
+
                     if(isConnected) {
 
-                        String rowId = mCursor.getString(MyLoader.Query.COLUMN_ID);
+
+
+                        long rowId = getItemId(vh.getAdapterPosition());
 
 
                         Intent feedDetail = new Intent(getApplicationContext(), DetailsActivity.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("rowId", rowId);
+                        bundle.putLong("rowId", rowId);
                         feedDetail.putExtras(bundle);
                         startActivity(feedDetail);
                     }else {
