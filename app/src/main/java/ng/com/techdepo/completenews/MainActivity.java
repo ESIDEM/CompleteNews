@@ -2,10 +2,13 @@ package ng.com.techdepo.completenews;
 
 
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private RecyclerView mRecyclerView;
     boolean isConnected;
     private TextView noNetworkText;
+    private ProgressDialog mProgress;
 
 
     @Override
@@ -80,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         SyncUtils.CreateSyncAccount(this);
 
+        mProgress = new ProgressDialog(this);
+
 
         isConnected = Connection.isNetworkAvailable(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -89,7 +95,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
 
-        loadNews();
+
+       loadNews();
         nContext = this;
 
 
@@ -203,6 +210,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (isConnected) {
             noNetworkText.setVisibility(View.GONE);
+            mProgress.setMessage("Please Wait..." );
+            mProgress.show();
+            progressDelay(6000,mProgress);
             SyncUtils.TriggerRefresh();
         } else {
             noNetworkText.setVisibility(View.VISIBLE);
@@ -352,4 +362,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             pubDate = (TextView) view.findViewById(R.id.date_view);
         }
     }
-}
+
+            public void progressDelay(long time, final Dialog d){
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        d.dismiss();
+                    }
+                }, time);
+            }
+
+
+
+        }
