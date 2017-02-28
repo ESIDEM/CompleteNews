@@ -102,7 +102,7 @@ public class NewsWidgetServices extends RemoteViewsService{
                 String newsDes = data.getString(data.getColumnIndex(FeedContract.Entry.COLUMN_NAME_DESCRIPTION));
                 String newsDate = data.getString(data.getColumnIndex(FeedContract.Entry.COLUMN_NAME_PUBLISHED));
 
-                String newsID = data.getString(data.getColumnIndex(FeedContract.Entry._ID));
+                long newsID = data.getLong(data.getColumnIndex(FeedContract.Entry._ID));
                 final RemoteViews views = new RemoteViews(getPackageName(),
                         R.layout.widget_list_item);
 
