@@ -111,13 +111,6 @@ public class NewsWidgetServices extends RemoteViewsService{
                 views.setTextViewText(R.id.widget_description_view, newsDes);
                 views.setTextViewText(R.id.widget_date_view, newsDate);
                 String imageUrl = data.getString(data.getColumnIndex(FeedContract.Entry.COLUMN_NAME_IMAGE_URL));
-//                if (imageUrl != null && imageUrl.length() > 0) {
-//                    try {
-//                        views.setImageViewBitmap(R.id.widget_image_view, Picasso.with(context).load(imageUrl).get());
-//                    } catch (IOException e) {
-//                        Log.e(TAG, "Unable to get image: " + imageUrl, e);
-//                    }
-//                }
 
                 final Intent fillInIntent = new Intent();
                 fillInIntent.putExtra("rowId", newsID);
